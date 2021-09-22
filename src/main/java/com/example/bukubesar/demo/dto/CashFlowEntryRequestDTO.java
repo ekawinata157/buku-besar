@@ -9,4 +9,5 @@ public class CashFlowEntryRequestDTO {
     private String period;
     private String password;
     private String filePath;
+    private String targetFilePath;
 }
