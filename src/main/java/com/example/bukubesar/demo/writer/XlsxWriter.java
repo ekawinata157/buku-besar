@@ -8,11 +8,9 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @AllArgsConstructor
@@ -87,7 +85,13 @@ public class XlsxWriter<T> {
                         if (xlsxWriteable.type().equals(double.class)) {
                             cell.setCellStyle(cellStyle);
                             Double doubleValue = (Double) a.get(t);
-                            cell.setCellValue(String.format("%.2f", doubleValue));
+                            if (xlsxWriteable.format().equals("IDR")) {
+                                Locale locale = new Locale("in", "ID");
+                                NumberFormat format = NumberFormat.getInstance(locale);
+                                cell.setCellValue(format.format(doubleValue));
+                            } else {
+                                cell.setCellValue(String.format("%.2f", doubleValue));
+                            }
                         } else if (xlsxWriteable.type().equals(Date.class)) {
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                             cell.setCellValue(simpleDateFormat.format(a.get(t)));

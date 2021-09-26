@@ -11,4 +11,5 @@ public @interface XlsxWriteable {
     int order() default 0;
     String headerName() default "";
     Class<?> type() default Object.class;
+    String format() default "";
 }
